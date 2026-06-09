@@ -1,0 +1,138 @@
+#!/usr/bin/python3
+# COADER : AKASH BLACK HAT
+# OPTIMIZED FOR WINDOWS & BLOCK-FREE API BY GEMINI COLLABORATOR (2026)
+
+import os
+import sys
+import time as t
+
+# Automated safe dependency management system
+try:
+    import requests
+except ImportError:
+    os.system("pip install requests")
+    import requests
+
+try:
+    import colorama
+    from colorama import Fore, Style, Back, init
+    init(autoreset=True)
+except ImportError:
+    os.system("pip install colorama")
+    from colorama import Fore, Style, Back, init
+    init(autoreset=True)
+
+try:
+    import pyfiglet
+except ImportError:
+    os.system("pip install pyfiglet")
+    import pyfiglet
+
+t.sleep(0.5)
+os.system("cls") # Clearing screen for clean startup
+
+def loop():
+    os.system("cls")
+    # Akash Black Hat Original Terminal Art Design
+    print(Fore.GREEN + """    
+██╗     ██╗██╗   ██╗███████╗
+██║     ██║██║   ██║██╔════╝
+██║     ██║██║   ██║█████╗  
+██║     ██║╚██╗ ██╔╝██╔══╝  
+███████╗██║ ╚████╔╝ ███████╗
+╚══════╝╚═╝  ╚═══╝  ╚══════╝ V1.0                                                                                                                                              
+   ┌┬┐┬─┐┌─┐┌─┐┬┌─┌─┐┬─┐
+    │ ├┬┘├─┤│  ├┴┐├┤ ├┬┘
+    ┴ ┴└─┴ ┴└─┘┴ ┴└─┘┴└─                                                                                                                                                       
+ ==============================================
+[+]Author  : Akash Black Hat                 [+]
+[+]GitHub  : https://github.com/akashblackhat[+]
+ ==============================================""")
+    
+    print(Fore.GREEN + "\nType \"show\" to show all commands")
+
+    def track():
+        tip = input(Fore.MAGENTA + "Iptracker > " + Style.RESET_ALL).strip()
+        
+        if tip == "help":
+            print(Fore.BLUE + """
+            show      : Display all commands
+            iptracker : Used for tracking an Ip address
+            help      : Display how to use this tool
+            exit      : For quitting ip tracker
+            """)
+            track()
+            
+        elif tip == "show":
+            print(Fore.BLUE + """
+            Available commands:
+            -> help
+            -> show
+            -> exit
+            -> iptracker
+            """)
+            track()
+            
+        elif tip == "exit":
+            print(Fore.YELLOW + "Thanks for using my tool! Happy Hacking.")
+            sys.exit()
+            
+        elif tip == "iptracker":
+            print(Fore.GREEN + "\n________________________________Track Ip____________________________\n")
+            ip = input(Fore.YELLOW + Back.RED + "Enter IP Address : " + Style.RESET_ALL + " ").strip()
+            
+            if not ip:
+                print(Fore.RED + "IP Address khali nahi chhod sakte!")
+                track()
+                return
+                
+            print(Fore.CYAN + "Fetching data from " + ip + "...")
+
+            try:
+                # 100% Free, high-speed, block-free geographic endpoint
+                response = requests.get(f'http://ip-api.com/json/{ip}').json()
+                
+                if response.get("status") == "fail":
+                    print(Fore.RED + f"❌ Error: {response.get('message', 'Invalid IP Address')}")
+                    track()
+                    return
+
+                print(Fore.YELLOW + "\n=== LOCATION DATA ===")
+                print(Fore.YELLOW + f"IP Address   : {response.get('query')}")
+                print(Fore.YELLOW + f"Country      : {response.get('country')} ({response.get('countryCode')})")
+                print(Fore.YELLOW + f"Region/State : {response.get('regionName')}")
+                print(Fore.YELLOW + f"City         : {response.get('city')}")
+                print(Fore.YELLOW + f"Zip/Postal   : {response.get('zip')}")
+                print(Fore.YELLOW + f"ISP          : {response.get('isp')}")
+                print(Fore.YELLOW + f"Organization : {response.get('org')}")
+                print(Fore.YELLOW + f"AS Number    : {response.get('as')}")
+
+                lat = response.get("lat")
+                long = response.get("lon")
+
+                if lat and long:
+                    # Creating seamless navigation hyperlinks
+                    url = f"https://www.google.com/maps?q={lat},{long}"
+                    print(Fore.YELLOW + "\nGoogle Maps: " + Fore.GREEN + url)
+                    
+                    map_choice = input(Fore.CYAN + "\nDo you want to open location on google map? [yes/no]: " + Style.RESET_ALL).strip().lower()
+                    if map_choice in ["yes", "y"]:
+                        os.system(f"start {url}") # Launches default Windows web browser
+                else:
+                    print(Fore.RED + "Coordinates nahi mil paye.")
+
+            except Exception as e:
+                print(Fore.RED + f"❌ Network Error: {e}")
+            
+            print(Fore.GREEN + "\n____________________________________________________________________\n")
+            track()
+            
+        else:
+            print(Fore.RED + "Invalid Command!")
+            t.sleep(1)
+            track()
+
+    track()
+
+if __name__ == "__main__":
+    loop()
